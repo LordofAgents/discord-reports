@@ -383,7 +383,7 @@ class MyBot(commands.Bot):
         confirm_button.callback = self.confirm_kick
         view = discord.ui.View(timeout=None)
         view.add_item(confirm_button)
-        await interaction.response.send_message(confirm_message, view=view, ephemeral=True)
+        await interaction.response.send_message(confirm_message, view=view, ephemeral=False)
         # Abrufen der ursprünglichen Nachricht, auf die reagiert werden soll
         original_message = await interaction.channel.fetch_message(self.last_response_message_id)
         # Führen Sie hier Aktionen mit original_message durch, z. B. Reaktionen hinzufügen/entfernen
@@ -396,7 +396,7 @@ class MyBot(commands.Bot):
             success = await self.api_client.do_kick(player_name, steam_id_64, user_lang)
             if success:
                 kicked_message = get_translation(user_lang, "player_kicked_successfully").format(player_name)
-                await interaction.response.send_message(kicked_message, ephemeral=True)
+                await interaction.response.send_message(kicked_message, ephemeral=False)
 
                 players_data = await self.api_client.get_players_fast()
                 if players_data and 'result' in players_data:
@@ -413,9 +413,9 @@ class MyBot(commands.Bot):
                 else:
                     logging.error("Failed to retrieve players list or 'result' not in players_data.")
             else:
-                await interaction.response.send_message(get_translation(user_lang, "error_kicking_player"), ephemeral=True)
+                await interaction.response.send_message(get_translation(user_lang, "error_kicking_player"), ephemeral=False)
         else:
-            await interaction.response.send_message(get_translation(user_lang, "player_name_not_retrieved"), ephemeral=True)
+            await interaction.response.send_message(get_translation(user_lang, "player_name_not_retrieved"), ephemeral=False)
 
         try:
             original_message = await interaction.channel.fetch_message(self.last_response_message_id)
@@ -445,7 +445,7 @@ class MyBot(commands.Bot):
         print("Reactions updated")
 
         confirm_message = get_translation(user_lang, "unjustified_report_acknowledged")
-        await interaction.response.send_message(confirm_message, ephemeral=True)
+        await interaction.response.send_message(confirm_message, ephemeral=False)
         print("Confirmation message sent")
 
         author_name = get_author_name()
@@ -477,7 +477,7 @@ class MyBot(commands.Bot):
 
         # Optional: Senden einer Bestätigungsnachricht
         confirm_message = get_translation(user_lang, "no_action_performed")
-        await interaction.response.send_message(confirm_message, ephemeral=True)
+        await interaction.response.send_message(confirm_message, ephemeral=False)
 
 
 

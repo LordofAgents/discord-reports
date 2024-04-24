@@ -39,7 +39,7 @@ class PermaBanModal(discord.ui.Modal):
             else:
                 confirmation_message = get_translation(self.user_lang, "error_perma_banning_player")
 
-            await interaction.response.send_message(confirmation_message, ephemeral=True)
+            await interaction.response.send_message(confirmation_message, ephemeral=False)
 
             # Update the original message to disable buttons
             try:
@@ -58,7 +58,7 @@ class PermaBanModal(discord.ui.Modal):
                 logging.error(f"Unexpected error: {e}")
 
         else:
-            await interaction.response.send_message(get_translation(self.user_lang, "player_name_not_retrieved"), ephemeral=True)
+            await interaction.response.send_message(get_translation(self.user_lang, "player_name_not_retrieved"), ephemeral=False)
 
 class PermaBanButton(discord.ui.Button):
     def __init__(self, label: str, custom_id: str, api_client, steam_id_64, user_lang):
